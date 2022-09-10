@@ -15,19 +15,22 @@ const GameField = () => {
 	const [gameFiled, setGameFiled] = useState([]);
 	const [gameResult, setGameResult] = useState('');
 	useEffect(() => {
-		setGameFiled(genericGame(9));
+		setGameFiled(genericGame(12));
 	}, []);
 	useMemo(() => {
 		if (gameState.length === 2 && gameState[0] === gameState[1]) {
-			setGameResult('Win!');
-			setTimeout(() => window.location.reload(), 5000);
+			setGameResult('Получилось!');
+			setTimeout(() => window.location.reload(), 3000);
 		} else if (gameState.length === 2 && gameState[0] !== gameState[1]) {
-			setGameResult('Lose!');
+			setGameResult('Это фиаско, попробуй ещё раз!');
 			setTimeout(() => window.location.reload(), 3000);
 		}
 	}, [gameState]);
 	return (
 		<div className={styles.container}>
+			{!gameResult && (
+				<span className={styles.about}>Попробуй найти 2 одинаковые карточки!</span>
+			)}
 			<span className={styles.gameResult}>{gameResult}</span>
 			{/* <span>{JSON.stringify(gameState)}</span> */}
 			<div className={styles.gameField_container}>
