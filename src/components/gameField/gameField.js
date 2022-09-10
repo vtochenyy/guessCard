@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import GameCeil from '../gameCeil/gameCeil';
 import styles from './style.module.css';
 
@@ -11,6 +12,7 @@ const genericGame = (filedSize) => {
 };
 
 const GameField = () => {
+	const navigate = useNavigate();
 	const [gameState, setGameState] = useState([]);
 	const [gameFiled, setGameFiled] = useState([]);
 	const [gameResult, setGameResult] = useState('');
@@ -20,12 +22,16 @@ const GameField = () => {
 	useMemo(() => {
 		if (gameState.length === 2 && gameState[0] === gameState[1]) {
 			setGameResult('Получилось!');
-			setTimeout(() => window.location.reload(), 3000);
+			setTimeout(() => {
+				navigate('/guessCard/');
+			}, 3000);
 		} else if (gameState.length === 2 && gameState[0] !== gameState[1]) {
 			setGameResult('Это фиаско, попробуй ещё раз!');
-			setTimeout(() => window.location.reload(), 3000);
+			setTimeout(() => {
+				navigate('/guessCard/');
+			}, 3000);
 		}
-	}, [gameState]);
+	}, [gameState, navigate]);
 	return (
 		<div className={styles.container}>
 			{!gameResult && (
