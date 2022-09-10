@@ -1,0 +1,14 @@
+.gameCeil_container {
+	background-color: blueviolet;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 30px;
+	color: white;
+	width: 200px;
+	height: 200px;
+}
+
+.gameCeil_container:hover {
+	background-color: rgb(91, 31, 148);
+}
