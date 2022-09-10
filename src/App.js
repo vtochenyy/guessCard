@@ -1,7 +1,8 @@
 import styles from './app.module.css';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import GameField from './components/gameField/gameField';
 import StartScreen from './components/startScreen/StartScreen';
+import { useEffect } from 'react';
 
 function App() {
 	return (

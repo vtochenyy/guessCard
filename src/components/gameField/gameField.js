@@ -25,6 +25,7 @@ const GameField = () => {
 			setTimeout(() => {
 				navigate('/guessCard/');
 			}, 3000);
+			sessionStorage.setItem('isPLayed', true);
 		} else if (gameState.length === 2 && gameState[0] !== gameState[1]) {
 			setGameResult('Это фиаско, попробуй ещё раз!');
 			setTimeout(() => {
