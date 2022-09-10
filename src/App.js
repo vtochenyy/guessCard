@@ -6,7 +6,7 @@ function App() {
 	return (
 		<div className={styles.app_container}>
 			<Routes>
-				<Route path='/' element={<GameField />} />
+				<Route path='/guessCard/' element={<GameField />} />
 			</Routes>
 		</div>
 	);
