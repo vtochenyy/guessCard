@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 
 function App() {
 	const navigate = useNavigate();
-	useEffect(() => navigate('/main', { replace: false }), []);
+	useEffect(() => navigate('/guessCard/main'), []);
 
 	return (
 		<div className={styles.app_container}>
