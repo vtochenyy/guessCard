@@ -1,52 +1,70 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from 'react';
 import GameCeil from '../gameCeil/gameCeil';
 import styles from './style.module.css';
 
 const genericGame = (filedSize) => {
 	const gameCeils = [];
 	for (let i = 0; i < filedSize; i++) {
-		gameCeils.push(Math.floor(Math.random() * (4 - 1) + 1));
+		let j = i + 1;
+		gameCeils.push({
+			value: Math.floor(Math.random() * (1 - 1) + 1),
+			id: j,
+			isVisible: false,
+		});
 	}
 	return gameCeils;
 };
 
 const GameField = () => {
-	const navigate = useNavigate();
 	const [gameState, setGameState] = useState([]);
 	const [gameFiled, setGameFiled] = useState([]);
 	const [gameResult, setGameResult] = useState('');
 	useEffect(() => {
 		setGameFiled(genericGame(12));
 	}, []);
-	useMemo(() => {
+	const handleResult = useCallback(() => {
+		console.log(gameState);
+		debugger;
 		if (gameState.length === 2 && gameState[0] === gameState[1]) {
 			setGameResult('Получилось!');
+			let successCounter = +JSON.parse(sessionStorage.getItem('successCounter')) + 1;
+			sessionStorage.setItem('successCounter', successCounter);
 			setTimeout(() => {
-				navigate('/guessCard/');
+				setGameResult('');
+				setGameFiled(genericGame(12));
+				setGameState([]);
 			}, 3000);
-			sessionStorage.setItem('isPLayed', true);
 		} else if (gameState.length === 2 && gameState[0] !== gameState[1]) {
 			setGameResult('Это фиаско, попробуй ещё раз!');
 			setTimeout(() => {
-				navigate('/guessCard/');
+				setGameResult('');
+				setGameFiled(genericGame(12));
+				setGameState([]);
 			}, 3000);
 		}
-	}, [gameState, navigate]);
+	}, [gameState]);
 	return (
 		<div className={styles.container}>
 			{!gameResult && (
 				<span className={styles.about}>Попробуй найти 2 одинаковые карточки!</span>
 			)}
 			<span className={styles.gameResult}>{gameResult}</span>
-			{/* <span>{JSON.stringify(gameState)}</span> */}
 			<div className={styles.gameField_container}>
 				{gameFiled.map((el) => (
-					<GameCeil stateValue={el} gameState={gameState} setGameState={setGameState} />
+					<GameCeil
+						handleResult={handleResult}
+						key={el.id}
+						stateValue={el.value}
+						isVisible={el.isVisible}
+						id={el.id}
+						gameState={gameState}
+						setGameState={setGameState}
+						setGameFiled={setGameFiled}
+					/>
 				))}
 			</div>
 		</div>
 	);
 };
 
-export default GameField;
+export default React.memo(GameField);

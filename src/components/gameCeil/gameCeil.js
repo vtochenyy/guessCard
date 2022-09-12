@@ -1,18 +1,31 @@
-import { useState } from 'react';
+import React from 'react';
 import styles from './style.module.css';
 
-const GameCeil = ({ stateValue, setGameState, gameState }) => {
+const GameCeil = ({
+	stateValue,
+	isVisible,
+	setGameState,
+	gameState,
+	setGameFiled,
+	id,
+	handleResult,
+}) => {
 	const handleClick = () => {
-		setIsCeilVisible(true);
 		setGameState((prev) => {
 			let bufferState = [...prev];
 			bufferState.push(stateValue);
+			console.log(bufferState);
 			return bufferState;
 		});
+		setGameFiled((prev) => {
+			return prev.map((el) => {
+				return el.id === id ? { ...el, isVisible: true } : { ...el };
+			});
+		});
+		handleResult();
 	};
 
-	const [isCeilVisible, setIsCeilVisible] = useState(false);
-	return isCeilVisible ? (
+	return isVisible ? (
 		<div className={styles.gameCeil_container}>{stateValue}</div>
 	) : (
 		<div
@@ -22,4 +35,4 @@ const GameCeil = ({ stateValue, setGameState, gameState }) => {
 	);
 };
 
-export default GameCeil;
+export default React.memo(GameCeil);

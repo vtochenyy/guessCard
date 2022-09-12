@@ -1,9 +1,9 @@
 .gameField_container {
-	padding: 10px;
+	padding: 5px;
 	background-color: rgb(140, 140, 184);
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	grid-gap: 10px;
+	grid-gap: 5px;
 	animation-name: appear;
 	animation-duration: 2s;
 }
