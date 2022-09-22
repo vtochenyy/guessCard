@@ -8,13 +8,11 @@ const GameCeil = ({
 	gameState,
 	setGameFiled,
 	id,
-	handleResult,
 }) => {
 	const handleClick = () => {
 		setGameState((prev) => {
 			let bufferState = [...prev];
 			bufferState.push(stateValue);
-			console.log(bufferState);
 			return bufferState;
 		});
 		setGameFiled((prev) => {
@@ -22,7 +20,6 @@ const GameCeil = ({
 				return el.id === id ? { ...el, isVisible: true } : { ...el };
 			});
 		});
-		handleResult();
 	};
 
 	return isVisible ? (

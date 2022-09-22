@@ -8,6 +8,10 @@
 	animation-duration: 2s;
 }
 
+.successCounter {
+	color: blueviolet;
+}
+
 .container {
 	height: 100%;
 	display: flex;
