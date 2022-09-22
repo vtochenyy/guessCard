@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/guessCard/static/css/main.e5353ece.css",
-    "main.js": "/guessCard/static/js/main.ed6fc61a.js",
+    "main.css": "/guessCard/static/css/main.679be8cf.css",
+    "main.js": "/guessCard/static/js/main.b0b605bc.js",
     "index.html": "/guessCard/index.html",
-    "main.e5353ece.css.map": "/guessCard/static/css/main.e5353ece.css.map",
-    "main.ed6fc61a.js.map": "/guessCard/static/js/main.ed6fc61a.js.map"
+    "main.679be8cf.css.map": "/guessCard/static/css/main.679be8cf.css.map",
+    "main.b0b605bc.js.map": "/guessCard/static/js/main.b0b605bc.js.map"
   },
   "entrypoints": [
-    "static/css/main.e5353ece.css",
-    "static/js/main.ed6fc61a.js"
+    "static/css/main.679be8cf.css",
+    "static/js/main.b0b605bc.js"
   ]
 }
