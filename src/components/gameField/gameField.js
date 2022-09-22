@@ -7,7 +7,7 @@ const genericGame = (filedSize) => {
 	for (let i = 0; i < filedSize; i++) {
 		let j = i + 1;
 		gameCeils.push({
-			value: Math.floor(Math.random() * (1 - 1) + 1),
+			value: Math.floor(Math.random() * (4 - 1) + 1),
 			id: j,
 			isVisible: false,
 		});
@@ -27,13 +27,11 @@ const GameField = () => {
 	}, []);
 	useMemo(() => {
 		sessionStorage.setItem('successCounter', successCounter);
-		console.log(successCounter, 'successCounter');
 	}, [successCounter]);
 	useMemo(() => {
 		if (gameState.length === 2 && gameState[0] === gameState[1]) {
 			setGameResult('Получилось!');
 			setSuccessCounter((prev) => {
-				console.log(prev, 'prev');
 				return prev + 1;
 			});
 			setTimeout(() => {
@@ -50,6 +48,11 @@ const GameField = () => {
 							transform: 'scale(1)',
 						},
 						{
+							border: '1px solid blueviolet',
+							color: 'blueviolet',
+							transform: 'scale(1)',
+						},
+						{
 							border: '1px solid gold',
 							color: 'gold',
 							transform: 'scale(1.2)',
@@ -59,9 +62,14 @@ const GameField = () => {
 							color: 'blueviolet',
 							transform: 'scale(1)',
 						},
+						{
+							border: '1px solid blueviolet',
+							color: 'blueviolet',
+							transform: 'scale(1)',
+						},
 					],
 					{
-						duration: 500,
+						duration: 600,
 						animationFillMode: 'ease',
 					}
 				);
