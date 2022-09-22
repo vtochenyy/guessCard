@@ -17,7 +17,7 @@
 	grid-template-columns: repeat(4, 1fr);
 }
 .gameField_container_4 {
-	grid-template-columns: repeat(4, 1fr);
+	grid-template-columns: repeat(5, 1fr);
 	background-color: rgb(160, 95, 95);
 }
 

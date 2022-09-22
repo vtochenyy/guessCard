@@ -44,7 +44,7 @@ const GameField = () => {
 			return genericGame(24, 6);
 		} else {
 			refGgameFieldContainer.current.classList.add(styles.gameField_container_4);
-			return genericGame(24, 7);
+			return genericGame(25, 7);
 		}
 	};
 
@@ -98,15 +98,6 @@ const GameField = () => {
 			setGameResult('Получилось!');
 			setSuccessCounter((prev) => {
 				return prev + 1;
-			});
-			gameFiled.forEach((el, index) => {
-				el.value === lastElement &&
-					el.isVisible &&
-					setGameFiled((prev) => {
-						let bufferState = [...prev];
-						bufferState[index] = { ...bufferState[index], isGolden: true };
-						return bufferState;
-					});
 			});
 			setIsGlobalDisabled(true);
 			setTimeout(() => {
