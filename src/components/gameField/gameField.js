@@ -14,6 +14,8 @@ const genericGame = (filedSize) => {
 	}
 	return gameCeils;
 };
+
+// COMPONENT
 const GameField = () => {
 	const [successCounter, setSuccessCounter] = useState(
 		JSON.parse(sessionStorage.getItem('successCounter'))
@@ -21,9 +23,26 @@ const GameField = () => {
 	const [gameState, setGameState] = useState([]);
 	const [gameFiled, setGameFiled] = useState([]);
 	const [gameResult, setGameResult] = useState('');
+	const [isGlobalDisabled, setIsGlobalDisabled] = useState(false);
 
 	const refSuccessCounter = useRef();
 	const refGgameFieldContainer = useRef();
+
+	const startGame = () => {
+		if (successCounter < 4) {
+			return genericGame(12);
+		} else if (successCounter < 8) {
+			refGgameFieldContainer.current.classList.add(styles.gameField_container_2);
+			return genericGame(15);
+		} else if (successCounter < 12) {
+			refGgameFieldContainer.current.classList.add(styles.gameField_container_3);
+			return genericGame(24);
+		} else if (successCounter < 16) {
+			console.log('123');
+			refGgameFieldContainer.current.classList.add(styles.gameField_container_4);
+			return genericGame(24);
+		}
+	};
 
 	const animateSuccesCounterIncrement = () => {
 		refSuccessCounter.current.animate(
@@ -55,38 +74,14 @@ const GameField = () => {
 				},
 			],
 			{
-				duration: 600,
+				duration: 1000,
 				animationFillMode: 'ease',
 			}
 		);
-
-		// refGgameFieldContainer.current.animate(
-		// 	[
-		// 		{
-		// 			backgroundColor: 'rgb(140, 140, 184)',
-		// 		},
-		// 		{
-		// 			backgroundColor: 'gold',
-		// 		},
-		// 		{
-		// 			backgroundColor: 'cyan',
-		// 		},
-		// 		{
-		// 			backgroundColor: 'gold',
-		// 		},
-		// 		{
-		// 			backgroundColor: 'rgb(140, 140, 184)',
-		// 		},
-		// 	],
-		// 	{
-		// 		duration: 1500,
-		// 		animationFillMode: 'ease',
-		// 	}
-		// );
 	};
 
 	useEffect(() => {
-		setGameFiled(genericGame(12));
+		setGameFiled(startGame());
 	}, []);
 
 	useMemo(() => {
@@ -94,23 +89,29 @@ const GameField = () => {
 	}, [successCounter]);
 
 	useMemo(() => {
-		if (gameState.length === 2 && gameState[0] === gameState[1]) {
+		let lastElement = [...gameState].pop();
+		// console.log(lastElement, 'lastElement');
+		// console.log(gameState, 'gameState');
+		// console.log(
+		// 	gameState.slice(0, -1).includes(lastElement),
+		// 	'gameState.includes(lastElement)'
+		// );
+		if (gameState.slice(0, -1).includes(lastElement)) {
 			setGameResult('Получилось!');
 			setSuccessCounter((prev) => {
 				return prev + 1;
 			});
+			setIsGlobalDisabled(true);
 			setTimeout(() => {
 				setGameResult('');
-				setGameFiled(genericGame(12));
+				setGameFiled(startGame());
 				setGameState([]);
+				setIsGlobalDisabled(false);
 			}, 3000);
 			successCounter > 0 && animateSuccesCounterIncrement();
 		} else if (gameState.length === 2 && gameState[0] !== gameState[1]) {
-			setGameResult('Это фиаско, попробуй ещё раз!');
 			setTimeout(() => {
 				setGameResult('');
-				setGameFiled(genericGame(12));
-				setGameState([]);
 			}, 3000);
 		}
 	}, [gameFiled]);
@@ -122,18 +123,26 @@ const GameField = () => {
 					Количество успешных попыток: {sessionStorage.getItem('successCounter')}
 				</span>
 			)}
+			{!!gameResult && <span className={styles.gameResult}>{gameResult}</span>}
 			{!gameResult && (
-				<span className={styles.about}>Попробуй найти 2 одинаковые карточки!</span>
+				<span
+					onClick={() => {
+						setGameState((prev) => [...prev].push(1));
+						console.log(gameState);
+					}}
+					className={styles.about}
+				>
+					Попробуй найти 2 одинаковые карточки!
+				</span>
 			)}
-			<span className={styles.gameResult}>{gameResult}</span>
 			<div ref={refGgameFieldContainer} className={styles.gameField_container}>
 				{gameFiled.map((el) => (
 					<GameCeil
+						isGlobalDisabled={isGlobalDisabled}
 						key={el.id}
 						stateValue={el.value}
 						isVisible={el.isVisible}
 						id={el.id}
-						gameState={gameState}
 						setGameState={setGameState}
 						setGameFiled={setGameFiled}
 					/>

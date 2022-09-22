@@ -8,12 +8,23 @@
 	animation-duration: 2s;
 }
 
+.gameField_container_2 {
+	background-color: rgb(116, 160, 95);
+}
+
+.gameField_container_3 {
+	background-color: cadetblue;
+	grid-template-columns: repeat(4, 1fr);
+}
+.gameField_container_4 {
+	grid-template-columns: repeat(4, 1fr);
+	background-color: rgb(160, 95, 95);
+}
+
 .successCounter {
 	padding: 20px;
 	border: 1px solid blueviolet;
 	color: blueviolet;
-	position: absolute;
-	top: 10%;
 	animation-name: appearSuccessCounter;
 	animation-duration: 3s;
 }
@@ -28,7 +39,7 @@
 
 .gameResult {
 	font-size: 20px;
-	margin-bottom: 20px;
+	margin: 50px 0 20px 0;
 }
 
 @keyframes appear {
@@ -42,14 +53,16 @@
 
 @keyframes appearSuccessCounter {
 	0% {
+		opacity: 0;
 		transform: translateX(-200%);
 	}
 	100% {
+		opacity: 1;
 		transform: translateX(0);
 	}
 }
 
 .about {
 	font-size: 20px;
-	margin-bottom: 20px;
+	margin: 50px 0 20px 0;
 }

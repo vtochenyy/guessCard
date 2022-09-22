@@ -4,8 +4,8 @@ import styles from './style.module.css';
 const GameCeil = ({
 	stateValue,
 	isVisible,
+	isGlobalDisabled,
 	setGameState,
-	gameState,
 	setGameFiled,
 	id,
 }) => {
@@ -26,7 +26,7 @@ const GameCeil = ({
 		<div className={styles.gameCeil_container}>{stateValue}</div>
 	) : (
 		<div
-			onClick={() => gameState.length < 2 && handleClick()}
+			onClick={() => !isGlobalDisabled && handleClick()}
 			className={styles.gameCeil_container}
 		></div>
 	);
