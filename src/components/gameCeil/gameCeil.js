@@ -7,6 +7,7 @@ const GameCeil = ({
 	isGlobalDisabled,
 	setGameState,
 	setGameFiled,
+	isGolden,
 	id,
 }) => {
 	const handleClick = () => {
@@ -23,7 +24,9 @@ const GameCeil = ({
 	};
 
 	return isVisible ? (
-		<div className={styles.gameCeil_container}>{stateValue}</div>
+		<div className={isGolden ? styles.isGolden : styles.gameCeil_container}>
+			{stateValue}
+		</div>
 	) : (
 		<div
 			onClick={() => !isGlobalDisabled && handleClick()}

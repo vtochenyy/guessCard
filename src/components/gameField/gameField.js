@@ -1,15 +1,17 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import GameCeil from '../gameCeil/gameCeil';
+import { Popover } from 'antd';
 import styles from './style.module.css';
 
-const genericGame = (filedSize) => {
+const genericGame = (filedSize, maxNumber) => {
 	const gameCeils = [];
 	for (let i = 0; i < filedSize; i++) {
 		let j = i + 1;
 		gameCeils.push({
-			value: Math.floor(Math.random() * (4 - 1) + 1),
+			value: Math.floor(Math.random() * (maxNumber - 1) + 1),
 			id: j,
 			isVisible: false,
+			isGolden: false,
 		});
 	}
 	return gameCeils;
@@ -30,17 +32,19 @@ const GameField = () => {
 
 	const startGame = () => {
 		if (successCounter < 4) {
-			return genericGame(12);
+			return genericGame(12, 4);
 		} else if (successCounter < 8) {
 			refGgameFieldContainer.current.classList.add(styles.gameField_container_2);
-			return genericGame(15);
+			return genericGame(15, 5);
 		} else if (successCounter < 12) {
 			refGgameFieldContainer.current.classList.add(styles.gameField_container_3);
-			return genericGame(24);
+			return genericGame(24, 6);
 		} else if (successCounter < 16) {
-			console.log('123');
 			refGgameFieldContainer.current.classList.add(styles.gameField_container_4);
-			return genericGame(24);
+			return genericGame(24, 6);
+		} else {
+			refGgameFieldContainer.current.classList.add(styles.gameField_container_4);
+			return genericGame(24, 7);
 		}
 	};
 
@@ -90,16 +94,19 @@ const GameField = () => {
 
 	useMemo(() => {
 		let lastElement = [...gameState].pop();
-		// console.log(lastElement, 'lastElement');
-		// console.log(gameState, 'gameState');
-		// console.log(
-		// 	gameState.slice(0, -1).includes(lastElement),
-		// 	'gameState.includes(lastElement)'
-		// );
 		if (gameState.slice(0, -1).includes(lastElement)) {
 			setGameResult('Получилось!');
 			setSuccessCounter((prev) => {
 				return prev + 1;
+			});
+			gameFiled.forEach((el, index) => {
+				el.value === lastElement &&
+					el.isVisible &&
+					setGameFiled((prev) => {
+						let bufferState = [...prev];
+						bufferState[index] = { ...bufferState[index], isGolden: true };
+						return bufferState;
+					});
 			});
 			setIsGlobalDisabled(true);
 			setTimeout(() => {
@@ -125,15 +132,16 @@ const GameField = () => {
 			)}
 			{!!gameResult && <span className={styles.gameResult}>{gameResult}</span>}
 			{!gameResult && (
-				<span
-					onClick={() => {
-						setGameState((prev) => [...prev].push(1));
-						console.log(gameState);
-					}}
-					className={styles.about}
+				<Popover
+					content={
+						<div>
+							<p>dsdsds</p>
+						</div>
+					}
+					trigger='hover'
 				>
-					Попробуй найти 2 одинаковые карточки!
-				</span>
+					<span className={styles.about}>Попробуй найти 2 одинаковые карточки!</span>
+				</Popover>
 			)}
 			<div ref={refGgameFieldContainer} className={styles.gameField_container}>
 				{gameFiled.map((el) => (
@@ -143,6 +151,7 @@ const GameField = () => {
 						stateValue={el.value}
 						isVisible={el.isVisible}
 						id={el.id}
+						isGolden={el.isGolden}
 						setGameState={setGameState}
 						setGameFiled={setGameFiled}
 					/>
