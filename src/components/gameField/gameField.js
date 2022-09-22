@@ -18,13 +18,12 @@ const GameField = () => {
 	const [successCounter, setSuccessCounter] = useState(
 		JSON.parse(sessionStorage.getItem('successCounter'))
 	);
-	const refSuccerCounter = useRef();
+	const refSuccessCounter = useRef();
 	const [gameState, setGameState] = useState([]);
 	const [gameFiled, setGameFiled] = useState([]);
 	const [gameResult, setGameResult] = useState('');
 	useEffect(() => {
 		setGameFiled(genericGame(12));
-		console.log(refSuccerCounter);
 	}, []);
 	useMemo(() => {
 		sessionStorage.setItem('successCounter', successCounter);
@@ -42,29 +41,30 @@ const GameField = () => {
 				setGameFiled(genericGame(12));
 				setGameState([]);
 			}, 3000);
-			refSuccerCounter.current.animate(
-				[
+			successCounter > 0 &&
+				refSuccessCounter.current.animate(
+					[
+						{
+							border: '1px solid blueviolet',
+							color: 'blueviolet',
+							transform: 'scale(1)',
+						},
+						{
+							border: '1px solid gold',
+							color: 'gold',
+							transform: 'scale(1.2)',
+						},
+						{
+							border: '1px solid blueviolet',
+							color: 'blueviolet',
+							transform: 'scale(1)',
+						},
+					],
 					{
-						border: '1px solid blueviolet',
-						color: 'blueviolet',
-						transform: 'scale(1)',
-					},
-					{
-						border: '1px solid gold',
-						color: 'gold',
-						transform: 'scale(1.2)',
-					},
-					{
-						border: '1px solid blueviolet',
-						color: 'blueviolet',
-						transform: 'scale(1)',
-					},
-				],
-				{
-					duration: 500,
-					animationFillMode: 'ease',
-				}
-			);
+						duration: 500,
+						animationFillMode: 'ease',
+					}
+				);
 		} else if (gameState.length === 2 && gameState[0] !== gameState[1]) {
 			setGameResult('Это фиаско, попробуй ещё раз!');
 			setTimeout(() => {
@@ -77,7 +77,7 @@ const GameField = () => {
 	return (
 		<div className={styles.container}>
 			{!!successCounter && (
-				<span ref={refSuccerCounter} className={styles.successCounter}>
+				<span ref={refSuccessCounter} className={styles.successCounter}>
 					Количество успешных попыток: {sessionStorage.getItem('successCounter')}
 				</span>
 			)}
