@@ -9,7 +9,13 @@
 }
 
 .successCounter {
+	padding: 20px;
+	border: 1px solid blueviolet;
 	color: blueviolet;
+	position: absolute;
+	top: 10%;
+	animation-name: appearSuccessCounter;
+	animation-duration: 3s;
 }
 
 .container {
@@ -31,6 +37,33 @@
 	}
 	100% {
 		transform: scale(1);
+	}
+}
+
+@keyframes appearSuccessCounter {
+	0% {
+		transform: translateX(-200%);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+
+@keyframes successCounterIncrement {
+	0% {
+		border: 1px solid blueviolet;
+		color: blueviolet;
+		transform: scale(0);
+	}
+	50% {
+		border: 1px solid gold;
+		color: gold;
+		transform: scale(2);
+	}
+	100% {
+		border: 1px solid blueviolet;
+		color: blueviolet;
+		transform: scale(0);
 	}
 }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import GameCeil from '../gameCeil/gameCeil';
 import styles from './style.module.css';
 
@@ -18,11 +18,13 @@ const GameField = () => {
 	const [successCounter, setSuccessCounter] = useState(
 		JSON.parse(sessionStorage.getItem('successCounter'))
 	);
+	const refSuccerCounter = useRef();
 	const [gameState, setGameState] = useState([]);
 	const [gameFiled, setGameFiled] = useState([]);
 	const [gameResult, setGameResult] = useState('');
 	useEffect(() => {
 		setGameFiled(genericGame(12));
+		console.log(refSuccerCounter);
 	}, []);
 	useMemo(() => {
 		sessionStorage.setItem('successCounter', successCounter);
@@ -40,6 +42,29 @@ const GameField = () => {
 				setGameFiled(genericGame(12));
 				setGameState([]);
 			}, 3000);
+			refSuccerCounter.current.animate(
+				[
+					{
+						border: '1px solid blueviolet',
+						color: 'blueviolet',
+						transform: 'scale(1)',
+					},
+					{
+						border: '1px solid gold',
+						color: 'gold',
+						transform: 'scale(1.2)',
+					},
+					{
+						border: '1px solid blueviolet',
+						color: 'blueviolet',
+						transform: 'scale(1)',
+					},
+				],
+				{
+					duration: 500,
+					animationFillMode: 'ease',
+				}
+			);
 		} else if (gameState.length === 2 && gameState[0] !== gameState[1]) {
 			setGameResult('Это фиаско, попробуй ещё раз!');
 			setTimeout(() => {
@@ -52,8 +77,8 @@ const GameField = () => {
 	return (
 		<div className={styles.container}>
 			{!!successCounter && (
-				<span className={styles.successCounter}>
-					Количество успешных попыток {sessionStorage.getItem('successCounter')}
+				<span ref={refSuccerCounter} className={styles.successCounter}>
+					Количество успешных попыток: {sessionStorage.getItem('successCounter')}
 				</span>
 			)}
 			{!gameResult && (
