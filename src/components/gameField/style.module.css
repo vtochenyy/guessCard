@@ -49,24 +49,6 @@
 	}
 }
 
-@keyframes successCounterIncrement {
-	0% {
-		border: 1px solid blueviolet;
-		color: blueviolet;
-		transform: scale(0);
-	}
-	50% {
-		border: 1px solid gold;
-		color: gold;
-		transform: scale(2);
-	}
-	100% {
-		border: 1px solid blueviolet;
-		color: blueviolet;
-		transform: scale(0);
-	}
-}
-
 .about {
 	font-size: 20px;
 	margin-bottom: 20px;

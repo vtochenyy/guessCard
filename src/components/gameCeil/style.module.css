@@ -12,3 +12,29 @@
 .gameCeil_container:hover {
 	background-color: rgb(91, 31, 148);
 }
+
+@media screen and (max-width: 2000px) {
+	.gameCeil_container {
+		background-color: rgb(59, 22, 94);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 30px;
+		color: white;
+		width: 10vw;
+		height: 13vh;
+	}
+}
+
+@media screen and (max-width: 1000px) {
+	.gameCeil_container {
+		background-color: rgb(59, 22, 94);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 30px;
+		color: white;
+		width: 20vw;
+		height: 13vh;
+	}
+}

@@ -18,16 +18,81 @@ const GameField = () => {
 	const [successCounter, setSuccessCounter] = useState(
 		JSON.parse(sessionStorage.getItem('successCounter'))
 	);
-	const refSuccessCounter = useRef();
 	const [gameState, setGameState] = useState([]);
 	const [gameFiled, setGameFiled] = useState([]);
 	const [gameResult, setGameResult] = useState('');
+
+	const refSuccessCounter = useRef();
+	const refGgameFieldContainer = useRef();
+
+	const animateSuccesCounterIncrement = () => {
+		refSuccessCounter.current.animate(
+			[
+				{
+					border: '1px solid blueviolet',
+					color: 'blueviolet',
+					transform: 'scale(1)',
+				},
+				{
+					border: '1px solid blueviolet',
+					color: 'blueviolet',
+					transform: 'scale(1)',
+				},
+				{
+					border: '1px solid gold',
+					color: 'gold',
+					transform: 'scale(1.2)',
+				},
+				{
+					border: '1px solid blueviolet',
+					color: 'blueviolet',
+					transform: 'scale(1)',
+				},
+				{
+					border: '1px solid blueviolet',
+					color: 'blueviolet',
+					transform: 'scale(1)',
+				},
+			],
+			{
+				duration: 600,
+				animationFillMode: 'ease',
+			}
+		);
+
+		refGgameFieldContainer.current.animate(
+			[
+				{
+					backgroundColor: 'rgb(140, 140, 184)',
+				},
+				{
+					backgroundColor: 'gold',
+				},
+				{
+					backgroundColor: 'cyan',
+				},
+				{
+					backgroundColor: 'gold',
+				},
+				{
+					backgroundColor: 'rgb(140, 140, 184)',
+				},
+			],
+			{
+				duration: 1500,
+				animationFillMode: 'ease',
+			}
+		);
+	};
+
 	useEffect(() => {
 		setGameFiled(genericGame(12));
 	}, []);
+
 	useMemo(() => {
 		sessionStorage.setItem('successCounter', successCounter);
 	}, [successCounter]);
+
 	useMemo(() => {
 		if (gameState.length === 2 && gameState[0] === gameState[1]) {
 			setGameResult('Получилось!');
@@ -39,40 +104,7 @@ const GameField = () => {
 				setGameFiled(genericGame(12));
 				setGameState([]);
 			}, 3000);
-			successCounter > 0 &&
-				refSuccessCounter.current.animate(
-					[
-						{
-							border: '1px solid blueviolet',
-							color: 'blueviolet',
-							transform: 'scale(1)',
-						},
-						{
-							border: '1px solid blueviolet',
-							color: 'blueviolet',
-							transform: 'scale(1)',
-						},
-						{
-							border: '1px solid gold',
-							color: 'gold',
-							transform: 'scale(1.2)',
-						},
-						{
-							border: '1px solid blueviolet',
-							color: 'blueviolet',
-							transform: 'scale(1)',
-						},
-						{
-							border: '1px solid blueviolet',
-							color: 'blueviolet',
-							transform: 'scale(1)',
-						},
-					],
-					{
-						duration: 600,
-						animationFillMode: 'ease',
-					}
-				);
+			successCounter > 0 && animateSuccesCounterIncrement();
 		} else if (gameState.length === 2 && gameState[0] !== gameState[1]) {
 			setGameResult('Это фиаско, попробуй ещё раз!');
 			setTimeout(() => {
@@ -82,6 +114,7 @@ const GameField = () => {
 			}, 3000);
 		}
 	}, [gameFiled]);
+
 	return (
 		<div className={styles.container}>
 			{!!successCounter && (
@@ -93,7 +126,7 @@ const GameField = () => {
 				<span className={styles.about}>Попробуй найти 2 одинаковые карточки!</span>
 			)}
 			<span className={styles.gameResult}>{gameResult}</span>
-			<div className={styles.gameField_container}>
+			<div ref={refGgameFieldContainer} className={styles.gameField_container}>
 				{gameFiled.map((el) => (
 					<GameCeil
 						key={el.id}
