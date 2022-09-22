@@ -60,29 +60,29 @@ const GameField = () => {
 			}
 		);
 
-		refGgameFieldContainer.current.animate(
-			[
-				{
-					backgroundColor: 'rgb(140, 140, 184)',
-				},
-				{
-					backgroundColor: 'gold',
-				},
-				{
-					backgroundColor: 'cyan',
-				},
-				{
-					backgroundColor: 'gold',
-				},
-				{
-					backgroundColor: 'rgb(140, 140, 184)',
-				},
-			],
-			{
-				duration: 1500,
-				animationFillMode: 'ease',
-			}
-		);
+		// refGgameFieldContainer.current.animate(
+		// 	[
+		// 		{
+		// 			backgroundColor: 'rgb(140, 140, 184)',
+		// 		},
+		// 		{
+		// 			backgroundColor: 'gold',
+		// 		},
+		// 		{
+		// 			backgroundColor: 'cyan',
+		// 		},
+		// 		{
+		// 			backgroundColor: 'gold',
+		// 		},
+		// 		{
+		// 			backgroundColor: 'rgb(140, 140, 184)',
+		// 		},
+		// 	],
+		// 	{
+		// 		duration: 1500,
+		// 		animationFillMode: 'ease',
+		// 	}
+		// );
 	};
 
 	useEffect(() => {
