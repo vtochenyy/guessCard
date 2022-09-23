@@ -1,3 +1,4 @@
+import { Button } from 'antd';
 import { useContext, useEffect } from 'react';
 import { AppContext } from '../../context/AppContext';
 import CrossNull from '../../pages/crossNull/CrossNullPage';
@@ -8,12 +9,35 @@ const StartScreen = () => {
 	const appContext = useContext(AppContext);
 	useEffect(() => console.log(appContext));
 	return !appContext.game ? (
-		<span
-			onClick={() => appContext.setGame(GameTypes.GUESS_SQUARE)}
-			className={styles.startGameText}
-		>
-			Начать игру в квадратики
-		</span>
+		<div className={styles.StartScreenContainer}>
+			<Button
+				type='primary'
+				shape='round'
+				size='large'
+				className={styles.startGameText}
+				onClick={() => appContext.setGame(GameTypes.GUESS_SQUARE)}
+			>
+				Начать игру в квадратики
+			</Button>
+			<Button
+				type='primary'
+				shape='round'
+				size='large'
+				className={styles.startGameText}
+				onClick={() => appContext.setGame(GameTypes.GUESS_SQUARE)}
+			>
+				Начать игру в квадратики
+			</Button>
+			<Button
+				type='primary'
+				shape='round'
+				size='large'
+				className={styles.startGameText}
+				onClick={() => appContext.setGame(GameTypes.GUESS_SQUARE)}
+			>
+				Начать игру в квадратики
+			</Button>
+		</div>
 	) : (
 		<>
 			<CrossNull />
