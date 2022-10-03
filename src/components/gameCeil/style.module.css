@@ -1,5 +1,6 @@
 .gameCeil_container {
-	background-color: rgb(59, 22, 94);
+	/* background-color: rgb(59, 22, 94); */
+	background-color: rgb(143, 121, 163);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -26,7 +27,7 @@
 
 @media screen and (max-width: 2000px) {
 	.gameCeil_container {
-		background-color: rgb(59, 22, 94);
+		background-color: rgb(70, 70, 70);
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -50,13 +51,13 @@
 
 @media screen and (max-width: 1000px) {
 	.gameCeil_container {
-		background-color: rgb(59, 22, 94);
+		background-color: rgb(70, 70, 70);
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		font-size: 30px;
 		color: white;
-		width: 20vw;
+		width: 18vw;
 		height: 10vh;
 	}
 

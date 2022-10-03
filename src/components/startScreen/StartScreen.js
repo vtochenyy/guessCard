@@ -24,18 +24,20 @@ const StartScreen = () => {
 				shape='round'
 				size='large'
 				className={styles.startGameText}
+				disabled
 				onClick={() => appContext.setGame(GameTypes.GUESS_SQUARE)}
 			>
-				Начать игру в квадратики
+				coming soon...
 			</Button>
 			<Button
 				type='primary'
 				shape='round'
 				size='large'
 				className={styles.startGameText}
+				disabled
 				onClick={() => appContext.setGame(GameTypes.GUESS_SQUARE)}
 			>
-				Начать игру в квадратики
+				coming soon...
 			</Button>
 		</div>
 	) : (

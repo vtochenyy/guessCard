@@ -1,6 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import GameCeil from '../gameCeil/gameCeil';
-import { Popover } from 'antd';
+import { Popover, message, Drawer, Button } from 'antd';
+import { MenuOutlined } from '@ant-design/icons';
+import iconImg from '../../assets/images/8665357_coins_icon.png';
 import styles from './style.module.css';
 
 const genericGame = (filedSize, maxNumber) => {
@@ -24,8 +27,8 @@ const GameField = () => {
 	);
 	const [gameState, setGameState] = useState([]);
 	const [gameFiled, setGameFiled] = useState([]);
-	const [gameResult, setGameResult] = useState('');
 	const [isGlobalDisabled, setIsGlobalDisabled] = useState(false);
+	const [open, setOpen] = useState(false);
 
 	const refSuccessCounter = useRef();
 	const refGgameFieldContainer = useRef();
@@ -41,7 +44,7 @@ const GameField = () => {
 			return genericGame(24, 6);
 		} else if (successCounter < 16) {
 			refGgameFieldContainer.current.classList.add(styles.gameField_container_4);
-			return genericGame(24, 6);
+			return genericGame(25, 6);
 		} else {
 			refGgameFieldContainer.current.classList.add(styles.gameField_container_4);
 			return genericGame(25, 7);
@@ -95,45 +98,57 @@ const GameField = () => {
 	useMemo(() => {
 		let lastElement = [...gameState].pop();
 		if (gameState.slice(0, -1).includes(lastElement)) {
-			setGameResult('Получилось!');
 			setSuccessCounter((prev) => {
 				return prev + 1;
 			});
 			setIsGlobalDisabled(true);
+			message.success('Получилось!');
 			setTimeout(() => {
-				setGameResult('');
 				setGameFiled(startGame());
 				setGameState([]);
 				setIsGlobalDisabled(false);
 			}, 3000);
 			successCounter > 0 && animateSuccesCounterIncrement();
-		} else if (gameState.length === 2 && gameState[0] !== gameState[1]) {
-			setTimeout(() => {
-				setGameResult('');
-			}, 3000);
 		}
 	}, [gameFiled]);
 
+	const handleDrawerVisible = () => {
+		open ? setOpen(false) : setOpen(true);
+	};
+
 	return (
 		<div className={styles.container}>
-			{!!successCounter && (
-				<span ref={refSuccessCounter} className={styles.successCounter}>
-					Количество успешных попыток: {sessionStorage.getItem('successCounter')}
-				</span>
-			)}
-			{!!gameResult && <span className={styles.gameResult}>{gameResult}</span>}
-			{!gameResult && (
-				<Popover
-					content={
-						<div>
-							<p>dsdsds</p>
-						</div>
-					}
-					trigger='hover'
-				>
-					<span className={styles.about}>Попробуй найти 2 одинаковые карточки!</span>
-				</Popover>
-			)}
+			<Button
+				size='large'
+				type='default'
+				className={styles.menuButton}
+				onClick={() => handleDrawerVisible()}
+				icon={<MenuOutlined />}
+			></Button>
+			<Drawer
+				title='Внутриигровое меню'
+				placement='left'
+				closable={false}
+				onClose={handleDrawerVisible}
+				open={open}
+			>
+				<p>Some contents...</p>
+				<p>Some contents...</p>
+				<p>Some contents...</p>
+			</Drawer>
+			<div className={styles.contianerToGameInfo}>
+				{!!successCounter && (
+					<span ref={refSuccessCounter} className={styles.successCounter}>
+						Количество успешных попыток: {sessionStorage.getItem('successCounter')}
+					</span>
+				)}
+				{!!successCounter && (
+					<div className={styles.successCounter + '   ' + styles.coinsContainer}>
+						<img src={iconImg} alt='img not found' />{' '}
+						{sessionStorage.getItem('successCounter') ** 2}
+					</div>
+				)}
+			</div>
 			<div ref={refGgameFieldContainer} className={styles.gameField_container}>
 				{gameFiled.map((el) => (
 					<GameCeil
